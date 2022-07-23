@@ -1,0 +1,32 @@
+name: automation
+on:
+  schedule:     
+    - cron: '0 */05 * * *'
+  workflow_dispatch:
+
+jobs:
+
+  Initialization:
+    runs-on: ubuntu-latest
+    env:
+      HOST_EMAIL: ${{ secrets.HOST_EMAIL }}
+      HOST_EMAIL_PASSWORD: ${{ secrets.HOST_EMAIL_PASSWORD }}
+      SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
+
+    steps:
+
+      - name: Install Dependencies
+        run: sudo pip install gspread
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          repository: kitsunejasutin/UDM_Admission_Automation
+          token: ${{ secrets.TOKEN }}
+          ref: main
+      
+      - name: Copy out Service Account 
+        run: sudo mkdir ~/.config/gspread/ && sudo mv service_account.json ~/.config/gspread/service_account.json
+
+      - name: Work
+        run: sudo -E python3 app.py ${{ secrets.HOST_EMAIL }} ${{ secrets.HOST_EMAIL_PASSWORD }}
