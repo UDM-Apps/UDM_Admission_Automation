@@ -10,7 +10,7 @@ jobs:
     env:
       HOST_EMAIL: ${{ secrets.HOST_EMAIL }}
       HOST_EMAIL_PASSWORD: ${{ secrets.HOST_EMAIL_PASSWORD }}
-      SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
+      TOKEN: ${{ secrets.TOKEN }}
 
     steps:
 
